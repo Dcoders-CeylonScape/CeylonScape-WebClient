@@ -6,10 +6,19 @@ export default {
   theme: {
       extend: {
           colors: {
-              primary: '#3494da',
-              secondary: '#F8E8EE',
+              primary_pri70: '#0F6795',
+              primary_pri50: '#1EA0D9',
               secondary2: '#FDCEDF',
               secondary3: '#F2BED1',
+          },
+          fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+          },
+          fontWeight: {
+              regular: 400,
+              medium: 500,
+              semibold: 600,
+              bold: 700,
           },
       },
   },
