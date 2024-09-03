@@ -86,34 +86,23 @@ function NavBar() {
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            sx={{ display: { xs: 'block', md: 'none' } }}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                                '& .MuiMenuItem-root': {
+                                    textAlign: 'center',
+                                    color: 'black',
+                                },
+                            }}
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography sx={{ textAlign: 'center', color: 'black'}} className={'!text-black'}>{page}</Typography>
+                                    <Typography>{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            letterSpacing: '.1rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
 
-                        className={'!text-primary_pri70 !font-poppins !font-semibold'}
-                    >
-                        Ceylonscapes
-                    </Typography>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center', }}>
                         {pages.map((page) => (
                             <Button
