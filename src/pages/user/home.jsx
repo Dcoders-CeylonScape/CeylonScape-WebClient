@@ -49,8 +49,8 @@ function Home() {
                     its scenic wonders and immerse themselves in its colorful tapestry of traditions.
                 </div>
 
-                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '16px', marginTop: '2.5rem' }}
-                        className="!font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Start Your Adventure</Button>
+                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '20px', marginTop: '2.5rem' }}
+                        className="!font-poppins !font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Start Your Adventure</Button>
             </div>
 
             <div className="flex flex-col items-center">
@@ -146,8 +146,8 @@ function Home() {
                     you to focus on enjoying the journey while we handle the details.
                 </div>
 
-                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '16px' }}
-                        className="!font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Plan Your Trip Now <img
+                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '20px' }}
+                        className="!font-poppins !font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Plan Your Trip Now <img
                             src={IconStarImg} className="ms-2" alt="" /></Button>
 
                 <div className="text-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-[20em] my-5">
@@ -158,9 +158,11 @@ function Home() {
                     ensures that every aspect of your travel is taken care of with ease and precision.
                 </div>
 
-                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '16px' }}
-                        className="!font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Ceylon Ai <img
+                <Button variant="contained" sx={{ textTransform: 'none', fontSize: '20px' }}
+                        className="!font-poppins !font-medium !bg-primary_pri50 !text-white !rounded-full !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]">Ceylon Ai <img
                             src={IconStarImg} className="ms-2" alt="" /></Button>
+
+
 
             </div>
 
