@@ -10,6 +10,8 @@ import SignIn from "./pages/auth/sign-in.jsx";
 import AuthMain from "./pages/auth/auth-main.jsx";
 import UserLayout from "./layouts/user_layout.jsx";
 import Home from "./pages/user/home.jsx";
+import OfficerLayout from "./layouts/officer_layout.jsx";
+import Dashboard from "./pages/officer/dashboard.jsx";
 
 import Interpol from "./pages/interpoltest/interpol.jsx";
 
@@ -21,6 +23,10 @@ const router = createBrowserRouter(
         <Route path={"sign-in"} element={<SignIn />} />
         <Route path={"auth-main"} element={<AuthMain />} />
       </Route>
+
+        <Route path={"officer"} element={<OfficerLayout/>} >
+            <Route index element={<Dashboard/>} />
+        </Route>
 
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
