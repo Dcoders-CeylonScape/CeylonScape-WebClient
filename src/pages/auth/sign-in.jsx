@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Logo from "../../assets/images/logo3.png";
-import GoogleButton from "../../assets/images/Google_login_.png";
+import GoogleButton from "../../assets/images/google_login_.png";
 import { Checkbox, Label, TextInput } from "flowbite-react";
 
 function SignIn() {
