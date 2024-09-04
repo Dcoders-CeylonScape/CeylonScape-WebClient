@@ -1,6 +1,7 @@
 // tailwind.config.js
 
 import flowbite from "flowbite-react/tailwind";
+import { Warning } from "postcss";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
@@ -12,6 +13,9 @@ export default {
         primary_pri10: '#E2F2FC',
         secondary2: "#FDCEDF",
         secondary3: "#F2BED1",
+        Warning_war50: "#CD734E",
+        error_err70: "#D70000",
+        black_blk10: "#E5E5E5",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

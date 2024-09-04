@@ -12,6 +12,8 @@ import UserLayout from "./layouts/user_layout.jsx";
 import Home from "./pages/user/home.jsx";
 import OfficerLayout from "./layouts/officer_layout.jsx";
 import Dashboard from "./pages/officer/dashboard.jsx";
+import PendingAcc from "./pages/officer/pending-account.jsx";
+import PendingInterpol from "./pages/officer/pending-interpol.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +26,8 @@ const router = createBrowserRouter(
 
         <Route path={"officer"} element={<OfficerLayout/>} >
             <Route index element={<Dashboard/>} />
+            <Route path={"pending-account"} element={<PendingAcc />} />
+            <Route path={"pending-interpol"} element={<PendingInterpol />} />
         </Route>
 
       <Route path={"/"} element={<UserLayout />}>
