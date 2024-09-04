@@ -14,7 +14,7 @@ function SignUp() {
         href="sign-in"
         variant="contained"
         sx={{ textTransform: "none", fontSize: "20px", marginTop: "5rem" }}
-        className="w-[160px]  sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-white !text-center !text-[20px] !leading-[25.069px] !bg-primary_pri50 !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
+        className="w-[160px]  sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium  !text-white !text-center !text-[20px] !leading-[25.069px] !bg-primary_pri50 !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
       >
         Log in
       </Button>
@@ -22,7 +22,7 @@ function SignUp() {
         href="sign-up"
         variant="contained"
         sx={{ textTransform: "none", fontSize: "20px", marginTop: "1.2rem" }}
-        className="w-[160px] sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-primary_pri50 !text-center !text-[20px] !leading-[25.069px] !bg-white !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
+        className="w-[160px] sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium !text-primary_pri50 !text-center !text-[20px] !leading-[25.069px] !bg-white !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
       >
         Signup
       </Button>

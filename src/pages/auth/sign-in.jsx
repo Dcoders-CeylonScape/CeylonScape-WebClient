@@ -32,6 +32,7 @@ function SignIn() {
             required
           />
         </div>
+        {/* <SLmap /> */}
         <div>
           <div className="mb-2 block">
             <Label htmlFor="password1" value="Password" />
