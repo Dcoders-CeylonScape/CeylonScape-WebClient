@@ -11,6 +11,8 @@ import AuthMain from "./pages/auth/auth-main.jsx";
 import UserLayout from "./layouts/user_layout.jsx";
 import Home from "./pages/user/home.jsx";
 
+import Interpol from "./pages/interpoltest/interpol.jsx";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
 
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
+      </Route>
+      <Route path={"/interpol"} element={<Interpol />} >
       </Route>
     </Route>
   )
