@@ -8,6 +8,7 @@ export default {
           colors: {
               primary_pri70: '#0F6795',
               primary_pri50: '#1EA0D9',
+              primary_pri10: '#E2F2FC',
               secondary2: '#FDCEDF',
               secondary3: '#F2BED1',
           },
