@@ -20,6 +20,9 @@ import Northern from "./pages/user/DestinationsProvince/Provinces/north.jsx";
 import NorthWestern from "./pages/user/DestinationsProvince/Provinces/north-western.jsx";
 import Sabaragamuwa from "./pages/user/DestinationsProvince/Provinces/sabaragamuwa.jsx";
 import Central from "./pages/user/DestinationsProvince/Provinces/central.jsx";
+import OfficerLayout from "./layouts/officer_layout.jsx";
+import Dashboard from "./pages/officer/dashboard.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +32,9 @@ const router = createBrowserRouter(
         <Route path={"sign-in"} element={<SignIn />} />
         <Route path={"auth-main"} element={<AuthMain />} />
       </Route>
+        <Route path={"officer"} element={<OfficerLayout/>} >
+            <Route index element={<Dashboard/>} />
+        </Route>
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
         <Route path={"provinces"} element={<DestinationsProvince />}>
