@@ -1,6 +1,6 @@
 import Logo from "../../assets/images/logo3.png";
 import Button from "@mui/material/Button";
-import GoogleButton from "../../assets/images/Google_login_.png";
+import GoogleButton from "../../assets/images/google_login_.png";
 
 function SignUp() {
   return (
