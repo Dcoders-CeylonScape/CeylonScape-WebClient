@@ -1,74 +1,90 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import AccountPic from '../../assets/images/account.png';
+import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress'; // Importing MUI Circular Progress for the loading indicator
+import PropTypes from 'prop-types';
 
-function PendingAccInterpol() {
+import { interpolApi } from '../../api/api';
+import axios from 'axios';
+
+
+InterpolNotices.propTypes = {
+    applicant: PropTypes.object,
+};
+
+function InterpolNotices({applicant}) {
+    let { id } = useParams();
+    const [notices, setNotices] = useState([]);
+    const [loading, setLoading] = useState(true); // State to track loading status
+
+    console.log("name" , applicant.name);
+
+    useEffect(() => {
+        console.log("name" , applicant.name);
+
+        setLoading(true);
+        interpolApi.get('/red', {
+            params: {
+                name: applicant.name,
+                forename: applicant.forename,
+            }
+        })
+            .then(response => {
+                try {
+                    // Attempt to parse the response daSingle</span>ta as JSON
+                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    console.log(data._embedded.notices);
+                    setNotices(data._embedded.notices); // Set data if successfully parsed
+                } catch (error) {
+                    console.error('Failed to parse data as JSON:', error);
+                }
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the data:', error);
+                setLoading(false);
+            });
+    }, [applicant]);
+
+
+    // {"_embedded":{"images":[{"picture_id":"62412749","_links":{"self":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images/62412749"}}}]},"_links":{"self":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images"},"notice":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535"},"thumbnail":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images/62412750"}}}
+
+//   const imageLoader = (imagesURL) => {
+//     const images = [];
+//     axios.get(imagesURL).then((response) => {
+//         console.log(response.data);
+//         images.push({
+//             picture_id: response.data.picture_id,
+//         })
+
+
+        
+        
+
+
+    if (loading) {
+        return (
+
+            <div className="flex justify-center items-center h-screen">
+                <CircularProgress /> {/* Displaying the loading spinner */}
+            </div>
+
+        );
+    }
+    console.log(applicant);
+    if (!notices.length) {
+        return (
+        <div>No data found for this applicant.</div>
+        
+        ); // Displayed if no applicant data is found after loading
+    }
+
+
     return (
-        <div className="ml-[350px] mr-[50px]">
-            {/* Title Section */}
-            <div className="ml-5 text-2xl font-medium mt-10">
-                Pending Applications
-            </div>
-            <div className="ml-5 text-lg font-light">
-                Check the applications, Approve, Deny or Mark for Review
-            </div>
+        // <div className="ml-[350px] mr-[50px]">
+        <div>
 
-            {/* Main Application Info Section */}
-            <div className="mt-10 ml-5 flex gap-6 w-full border-b-2 pb-5 border-gray-300">
-                {/* Flex Layout */}
-                <div className="flex gap-6 w-full">
-                    {/* Profile Image */}
-                    <div className="flex-shrink-0">
-                        <img 
-                            src={AccountPic} 
-                            alt="Person" 
-                            className="h-[240px] w-auto object-cover rounded-[20px] mb-3 border-2 border-primary_pri50" 
-                        />                    
-                    </div>
 
-                    {/* Applicant Info */}
-                    <div className="grid grid-cols-2 gap-4 flex-grow">
-                        {/* Left Column */}
-                        <div className="flex flex-col gap-4">
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Full Name: </span>
-                                <span className="ml-2">Emily Grace Johnson</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Gender: </span>
-                                <span className="ml-2">Female</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Place of Birth: </span>
-                                <span className="ml-2">Toronto, Ontario</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Civil Status: </span>
-                                <span className="ml-2">Single</span>
-                            </div>
-                        </div>
-
-                        {/* Right Column */}
-                        <div className="flex flex-col gap-4">
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Nationality: </span>
-                                <span className="ml-2">Canadian</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Date of Birth: </span>
-                                <span className="ml-2">July 15, 1995</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Country of Birth: </span>
-                                <span className="ml-2">Canada</span>
-                            </div>
-                            <div className="bg-primary_pri10 p-3 rounded-lg">
-                                <span className="font-semibold">Height: </span>
-                                <span className="ml-2">165 cm</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             {/* Interpol Red Notices Section */}
             <div className="mt-10 ml-5">
@@ -107,37 +123,51 @@ function PendingAccInterpol() {
                         </div>
                     </div>
 
-                    {/* Red Notice Card 2 */}
-                    <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
-                        <div className="flex items-start gap-4">
-                            <img 
-                                src={AccountPic} 
-                                alt="Interpol Notice Person" 
-                                className="h-[250px] w-auto object-cover rounded-[20px] mb-3 border-2 border-black_blk10" 
-                            />
-                            <div className="flex flex-col w-full">
-                                <div className="text-lg font-semibold">Emil Johnson</div>
-                                <div className="text-gray-500 mb-5">United States</div>
+                    {notices.map((notice, index) => (
+                        <div className="border rounded-lg p-4 flex flex-col bg-gray-50" key={index}>
+                            <div className="flex items-start gap-4">
+                                <img
+                                src={notice._links.thumbnail.href}
+                                alt="Interpol Notice Person"
+                                className="h-[250px] w-auto object-cover rounded-[20px] mb-3 border-2 border-black_blk10"
+                                />
+                                <div className="flex flex-col w-full">
+                                <div className="text-lg font-semibold">{notice.name} {notice.forename}</div>
+                                {/* print all nationalities */}
+                                <div className="text-gray-500 mb-5">{notice.nationalities.map((item, index) => (
+                                    <span key={index}>{item}</span>
+                                ))}</div>
+
+                                    
+
+
                                 <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
                                     <span className="font-semibold">Date of Birth: </span>
-                                    <span className="ml-2">January 15, 1986</span>
+                                    <span className="ml-2">{notice.date_of_birth}</span>
                                 </div>
                                 <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
                                     <span className="font-semibold">Nationalities: </span>
-                                    <span className="ml-2">US</span>
+                                    <span className="ml-2">
+                                        {notice.nationalities.map((item, index) => (
+                                    <span key={index}>{item+ " "}</span> 
+                                    
+                                ))}
+                                </span>
                                 </div>
                                 <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Email: </span>
-                                    <span className="ml-2">emil.johnson@example.com</span>
+                                    <span className="font-semibold">Notice Id: </span>
+                                    <span className="ml-2">{notice.entity_id}</span>
                                 </div>
-                            </div>
-                        </div>
+                                </div>
+                                </div>
                         <div className="flex justify-end mt-4">
                             <button className="bg-primary_pri50 text-white rounded-lg px-6 py-2 hover:bg-primary_pri60">
                                 Match
                             </button>
                         </div>
                     </div>
+                    ))}
+
 
                     {/* Red Notice Card 3 */}
                     <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
@@ -208,4 +238,4 @@ function PendingAccInterpol() {
     );
 }
 
-export default PendingAccInterpol;
+export default InterpolNotices;

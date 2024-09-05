@@ -23,7 +23,7 @@ import Central from "./pages/user/DestinationsProvince/Provinces/central.jsx";
 import OfficerLayout from "./layouts/officer_layout.jsx";
 import Dashboard from "./pages/officer/dashboard.jsx";
 import PendingApp from "./pages/officer/pending-application.jsx";
-import PendingInterpol from "./pages/officer/pending-interpol.jsx";
+import Notices from "./pages/officer/notices.jsx";
 
 
 import Interpol from "./pages/interpoltest/interpol.jsx";
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
         <Route path={"officer"} element={<OfficerLayout/>} >
             <Route index element={<Dashboard/>} />
             <Route path={"pending-application/:id"} element={<PendingApp />} />
-            <Route path={"pending-interpol"} element={<PendingInterpol />} />
+            <Route path={"pending-application/:id/notices"} element={<Notices />} />
         </Route>
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
