@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import AccountPic from '../../assets/images/account.png';
 import { useParams } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress'; // Importing MUI Circular Progress for the loading indicator
+import CircularProgress from '@mui/material/CircularProgress'; 
 import PropTypes from 'prop-types';
 
 import { interpolApi } from '../../api/api';
 import NoticeDetails from './noticeDetails';
 
-import { Button,Modal,Box,Typography,IconButton } from '@mui/material';
+import { Modal,Box,IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { countries } from '../../data/country';
 
 InterpolNotices.propTypes = {
     applicant: PropTypes.object,
@@ -31,13 +31,27 @@ function InterpolNotices({applicant}) {
     let { id } = useParams();
     const [notices, setNotices] = useState([]);
     const [selectedNotice, setSelectedNotice] = useState(null);
-    const [loading, setLoading] = useState(true); // State to track loading status
+    const [loading, setLoading] = useState(true); 
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     console.log("name" , applicant.name);
+
+
+    const getCountryName = (code) => {
+        const country = countries.find(country => country['alpha-2'] === code);
+        // console.log("country" , country.name);
+        return country ? country.name : code;
+    };
+
+    // July 15, 1995
+    const formatDate = (date) => {
+        const d = new Date(date);
+        return `${d.getDate()} ${d.toLocaleString('default', { month: 'long' })} ${d.getFullYear()}`;
+    };
+
 
     useEffect(() => {
         console.log("name" , applicant.name);
@@ -66,15 +80,6 @@ function InterpolNotices({applicant}) {
     }, [applicant]);
 
 
-    // {"_embedded":{"images":[{"picture_id":"62412749","_links":{"self":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images/62412749"}}}]},"_links":{"self":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images"},"notice":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535"},"thumbnail":{"href":"https://ws-public.interpol.int/notices/v1/red/2022-23535/images/62412750"}}}
-
-//   const imageLoader = (imagesURL) => {
-//     const images = [];
-//     axios.get(imagesURL).then((response) => {
-//         console.log(response.data);
-//         images.push({
-//             picture_id: response.data.picture_id,
-//         })
 
 
         
@@ -85,7 +90,7 @@ function InterpolNotices({applicant}) {
         return (
 
             <div className="flex justify-center items-center h-screen">
-                <CircularProgress /> {/* Displaying the loading spinner */}
+                <CircularProgress /> 
             </div>
 
         );
@@ -95,12 +100,12 @@ function InterpolNotices({applicant}) {
         return (
         <div>No data found for this applicant.</div>
         
-        ); // Displayed if no applicant data is found after loading
+        ); 
     }
 
 
     return (
-        // <div className="ml-[350px] mr-[50px]">
+      
         <div>
 
                 <Modal
@@ -131,11 +136,9 @@ function InterpolNotices({applicant}) {
 
 
 
-            {/* Interpol Red Notices Section */}
             <div className="mt-10 ml-5">
                 <div className="text-2xl font-medium mb-5">Interpol Red Notices</div>
 
-                {/* <Button onClick={handleOpen}>Open modal</Button> */}
 
               
 
@@ -182,9 +185,8 @@ function InterpolNotices({applicant}) {
                                 />
                                 <div className="flex flex-col w-full">
                                 <div className="text-lg font-semibold">{notice.name} {notice.forename}</div>
-                                {/* print all nationalities */}
                                 <div className="text-gray-500 mb-5">{notice.nationalities.map((item, index) => (
-                                    <span key={index}>{item}</span>
+                                    <span key={index}>{getCountryName(item)}</span>
                                 ))}</div>
 
                                     
@@ -192,13 +194,13 @@ function InterpolNotices({applicant}) {
 
                                 <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
                                     <span className="font-semibold">Date of Birth: </span>
-                                    <span className="ml-2">{notice.date_of_birth}</span>
+                                    <span className="ml-2">{formatDate(notice.date_of_birth)}</span>
                                 </div>
                                 <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
                                     <span className="font-semibold">Nationalities: </span>
                                     <span className="ml-2">
                                         {notice.nationalities.map((item, index) => (
-                                    <span key={index}>{item+ " "}</span> 
+                                    <span key={index}>{getCountryName(item)+ " "}</span> 
                                     
                                 ))}
                                 </span>
