@@ -14,7 +14,7 @@ function Notices() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://localhost:5173/application/${id}`)
+        axios.get(`/application/${id}`)
             .then(response => {
                 try {
                     // Attempt to parse the response daSingle</span>ta as JSON
