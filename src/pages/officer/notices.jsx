@@ -122,7 +122,9 @@ function Notices() {
             </div>
 
 
-<InterpolNotices applicant={applicant} />
+            <div style={{ overflow: 'auto', maxHeight: '90vh' }}>  {/* Set maxHeight to limit the scrollable area */}
+    <InterpolNotices applicant={applicant} />
+</div>
 
 
         </div>
