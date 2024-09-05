@@ -22,7 +22,7 @@ import Sabaragamuwa from "./pages/user/DestinationsProvince/Provinces/sabaragamu
 import Central from "./pages/user/DestinationsProvince/Provinces/central.jsx";
 import OfficerLayout from "./layouts/officer_layout.jsx";
 import Dashboard from "./pages/officer/dashboard.jsx";
-import PendingAcc from "./pages/officer/pending-account.jsx";
+import PendingApp from "./pages/officer/pending-application.jsx";
 import PendingInterpol from "./pages/officer/pending-interpol.jsx";
 
 
@@ -38,7 +38,7 @@ const router = createBrowserRouter(
       </Route>
         <Route path={"officer"} element={<OfficerLayout/>} >
             <Route index element={<Dashboard/>} />
-            <Route path={"pending-account"} element={<PendingAcc />} />
+            <Route path={"pending-application/:id"} element={<PendingApp />} />
             <Route path={"pending-interpol"} element={<PendingInterpol />} />
         </Route>
       <Route path={"/"} element={<UserLayout />}>
