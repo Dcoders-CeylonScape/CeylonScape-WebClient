@@ -70,7 +70,7 @@ function Notices() {
                     {/* Profile Image */}
                     <div className="flex-shrink-0">
                         <img 
-                            src={AccountPic} 
+                            src={applicant.imageURL}
                             alt="Person" 
                             className="h-[240px] w-auto object-cover rounded-[20px] mb-3 border-2 border-primary_pri50" 
                         />                    

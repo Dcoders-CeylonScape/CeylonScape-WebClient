@@ -5,17 +5,37 @@ import CircularProgress from '@mui/material/CircularProgress'; // Importing MUI 
 import PropTypes from 'prop-types';
 
 import { interpolApi } from '../../api/api';
-import axios from 'axios';
+import NoticeDetails from './noticeDetails';
+
+import { Button,Modal,Box,Typography,IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 InterpolNotices.propTypes = {
     applicant: PropTypes.object,
 };
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 1000,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 function InterpolNotices({applicant}) {
     let { id } = useParams();
     const [notices, setNotices] = useState([]);
+    const [selectedNotice, setSelectedNotice] = useState(null);
     const [loading, setLoading] = useState(true); // State to track loading status
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     console.log("name" , applicant.name);
 
@@ -31,10 +51,9 @@ function InterpolNotices({applicant}) {
         })
             .then(response => {
                 try {
-                    // Attempt to parse the response daSingle</span>ta as JSON
                     const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
                     console.log(data._embedded.notices);
-                    setNotices(data._embedded.notices); // Set data if successfully parsed
+                    setNotices(data._embedded.notices); 
                 } catch (error) {
                     console.error('Failed to parse data as JSON:', error);
                 }
@@ -84,15 +103,45 @@ function InterpolNotices({applicant}) {
         // <div className="ml-[350px] mr-[50px]">
         <div>
 
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <IconButton
+                            aria-label="close"
+                            onClick={handleClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+
+
+                    <NoticeDetails noticeId={selectedNotice} applicant={applicant} />
+                    </Box>
+                </Modal>
+
+
 
 
             {/* Interpol Red Notices Section */}
             <div className="mt-10 ml-5">
                 <div className="text-2xl font-medium mb-5">Interpol Red Notices</div>
 
+                {/* <Button onClick={handleOpen}>Open modal</Button> */}
+
+              
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Red Notice Card 1 */}
-                    <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
+                    {/* <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
                         <div className="flex items-start gap-4">
                             <img 
                                 src={AccountPic} 
@@ -121,10 +170,10 @@ function InterpolNotices({applicant}) {
                                 Match
                             </button>
                         </div>
-                    </div>
+                    </div> */}
 
                     {notices.map((notice, index) => (
-                        <div className="border rounded-lg p-4 flex flex-col bg-gray-50" key={index}>
+                        <div className="border rounded-lg p-4 flex flex-col bg-gray-50 cursor-pointer" key={index} onClick={() => {setSelectedNotice(notice.entity_id); handleOpen()}} >
                             <div className="flex items-start gap-4">
                                 <img
                                 src={notice._links.thumbnail.href}
@@ -169,72 +218,13 @@ function InterpolNotices({applicant}) {
                     ))}
 
 
-                    {/* Red Notice Card 3 */}
-                    <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
-                        <div className="flex items-start gap-4">
-                            <img 
-                                src={AccountPic} 
-                                alt="Interpol Notice Person" 
-                                className="h-[250px] w-auto object-cover rounded-[20px] mb-3 border-2 border-black_blk10" 
-                            />
-                            <div className="flex flex-col w-full">
-                                <div className="text-lg font-semibold">Emil John</div>
-                                <div className="text-gray-500 mb-5">England</div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Date of Birth: </span>
-                                    <span className="ml-2">March 10, 1987</span>
-                                </div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Nationalities: </span>
-                                    <span className="ml-2">UK</span>
-                                </div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Email: </span>
-                                    <span className="ml-2">emil.john@example.com</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-end mt-4">
-                            <button className="bg-primary_pri50 text-white rounded-lg px-6 py-2 hover:bg-primary_pri60">
-                                Match
-                            </button>
-                        </div>
-                    </div>
+                
 
-                    {/* Red Notice Card 4 */}
-                    <div className="border rounded-lg p-4 flex flex-col bg-gray-50">
-                        <div className="flex items-start gap-4">
-                            <img 
-                                src={AccountPic} 
-                                alt="Interpol Notice Person" 
-                                className="h-[250px] w-auto object-cover rounded-[20px] mb-3 border-2 border-black_blk10" 
-                            />
-                            <div className="flex flex-col w-full">
-                                <div className="text-lg font-semibold">Emily Johns</div>
-                                <div className="text-gray-500 mb-5">Australia</div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Date of Birth: </span>
-                                    <span className="ml-2">August 22, 1990</span>
-                                </div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Nationalities: </span>
-                                    <span className="ml-2">AU</span>
-                                </div>
-                                <div className="bg-black_blk10 p-3 rounded-lg w-full mb-3">
-                                    <span className="font-semibold">Email: </span>
-                                    <span className="ml-2">emily.johns@example.com</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-end mt-4">
-                            <button className="bg-primary_pri50 text-white rounded-lg px-6 py-2 hover:bg-primary_pri60">
-                                Match
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
+
     );
 }
 

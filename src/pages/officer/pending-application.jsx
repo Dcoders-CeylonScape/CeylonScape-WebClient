@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import AccountPic from '../../assets/images/account.png';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlagIcon from '@mui/icons-material/Flag';
 import CircularProgress from '@mui/material/CircularProgress'; // Importing MUI Circular Progress for the loading indicator
@@ -72,7 +72,7 @@ function PendingApp() {
                     {/* Profile Image */}
                     <div className="col-span-2">
                         <img 
-                            src={AccountPic} 
+                            src={applicant.imageURL}
                             alt="Person" 
                             className="h-full w-auto object-cover rounded-lg mb-3 border-2 border-primary_pri50" 
                             />                    
@@ -176,9 +176,11 @@ function PendingApp() {
                 <div className="flex justify-center items-center w-10 h-10 bg-primary_pri10 rounded-full cursor-pointer">
                     <ArrowDropDownIcon className="text-primary_pri50" />
                 </div>
+                <Link to="notices" style={{ textDecoration: 'none' }}>
                 <button className="bg-primary_pri50 text-white rounded-lg px-6 py-2 hover:bg-primary_pri60">
                     Next
                 </button>
+                </Link>
             </div>
         </div>
     );
