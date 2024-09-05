@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
 import { api, interpolApi } from '../../api/api';
-import { CircularProgress, Box, Typography, IconButton, ImageListItem } from '@mui/material';
+import { CircularProgress, Box, Typography, IconButton } from '@mui/material';
 
 import SwipeableViews from 'react-swipeable-views';
 import { virtualize } from 'react-swipeable-views-utils';
@@ -23,7 +23,7 @@ function NoticeDetails({ noticeId, applicant }) {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeStep, setActiveStep] = useState(0);
-    const navigate = useNavigate(); // Hook for
+    const navigate = useNavigate();
     
 
     const denyApplication = () => {
@@ -81,7 +81,6 @@ function NoticeDetails({ noticeId, applicant }) {
 
         window.addEventListener('keydown', handleKeyDown);
 
-        // Cleanup the event listener when the component unmounts
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
@@ -128,7 +127,6 @@ function NoticeDetails({ noticeId, applicant }) {
         <Box display="flex" p={2} gap={2}>
 
         <Box flex={1} height={500} position="relative" gap={2}> 
-               {/* Image */}
                <img src={applicant.imageURL} alt="Person" className=" w-auto object-cover rounded-[20px] mb-3 border-2 border-primary_pri50" />
             </Box>
 
@@ -140,7 +138,6 @@ function NoticeDetails({ noticeId, applicant }) {
                 >
                     <ArrowBackIosIcon />
                 </IconButton>
-                {/* Padding */}
                 <div className="h-1/2">
                 <VirtualizeSwipeableViews
                     index={activeStep}

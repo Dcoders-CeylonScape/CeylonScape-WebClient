@@ -1,5 +1,5 @@
 import React from "react";
-import WidgetRisk from "../../components/widgets/widgetRisk"; // Assuming WidgetRisk is the component you created
+import WidgetRisk from "../../components/widgets/widgetRisk"; 
 
 function Dashboard() {
     return (

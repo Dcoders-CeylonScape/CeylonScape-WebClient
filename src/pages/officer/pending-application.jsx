@@ -1,16 +1,15 @@
 import  { useEffect, useState } from 'react';
 import axios from 'axios';
-import AccountPic from '../../assets/images/account.png';
 import { useParams,Link } from 'react-router-dom';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlagIcon from '@mui/icons-material/Flag';
-import CircularProgress from '@mui/material/CircularProgress'; // Importing MUI Circular Progress for the loading indicator
+import CircularProgress from '@mui/material/CircularProgress'; 
 
 
 function PendingApp() {
     let { id } = useParams();
     const [applicant, setApplicant] = useState(null);
-    const [loading, setLoading] = useState(true); // State to track loading status
+    const [loading, setLoading] = useState(true); 
 
 
     useEffect(() => {
@@ -18,9 +17,8 @@ function PendingApp() {
         axios.get(`/application/${id}`)
             .then(response => {
                 try {
-                    // Attempt to parse the response data as JSON
                     const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-                    setApplicant(data); // Set data if successfully parsed
+                    setApplicant(data); 
                 } catch (error) {
                     console.error('Failed to parse data as JSON:', error);
                 }
@@ -37,7 +35,7 @@ function PendingApp() {
             <div className="ml-[350px] mr-[50px]">
 
             <div className="flex justify-center items-center h-screen">
-                <CircularProgress /> {/* Displaying the loading spinner */}
+                <CircularProgress /> 
             </div>
             </div>
 
@@ -50,14 +48,13 @@ function PendingApp() {
         <div>No data found for this applicant.</div>
     </div>
         
-        ); // Displayed if no applicant data is found after loading
+        ); 
     }
 
 
 
     return (
         <div className="ml-[350px] mr-[50px]">
-            {/* Title Section */}
             <div className="ml-5 text-2xl font-medium mt-10">
                 Pending Applications
             </div>
@@ -65,11 +62,8 @@ function PendingApp() {
                 Check the applications, Approve, Deny or Mark for Review
             </div>
 
-            {/* Main Application Info Section */}
             <div className="mt-10 ml-5 flex gap-6 w-full">
-                {/* Grid Layout */}
                 <div className="grid grid-cols-12 gap-6 w-full">
-                    {/* Profile Image */}
                     <div className="col-span-2">
                         <img 
                             src={applicant.imageURL}
@@ -78,9 +72,7 @@ function PendingApp() {
                             />                    
                     </div>
 
-                    {/* Applicant Info and Actions */}
                     <div className="col-span-10">
-                        {/* Name and Buttons */}
                         <div className="flex justify-between">
                             <div className="flex-col">
                                 <div className="flex items-center">
@@ -90,26 +82,21 @@ function PendingApp() {
                                 <div className="text-lg font-base text-primary_pri50">{applicant.nationality}</div>
                             </div>
                             <div className="flex gap-4">
-                                {/* Flag Button */}
                                 <button className="border border-Warning_war50 text-Warning_war50 rounded-lg px-8 h-[42px] hover:bg-orange-100">
                                     Flag
                                 </button>
 
-                                {/* Deny Button */}
                                 <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100">
                                     Deny
                                 </button>
 
-                                {/* Approve Button */}
                                 <button className="bg-primary_pri50 text-white rounded-lg px-4 h-[42px] hover:text-primary_pri10">
                                     Approve
                                 </button>
                             </div>
                         </div>
 
-                        {/* Applicant Details Grid */}
                         <div className="grid grid-cols-2 gap-4 w-full mt-5">
-                            {/* Dynamic Rows for Applicant Details */}
                             {Object.entries({
                                 "Full Name": applicant.fullName,
                                 "Nationality": applicant.nationality,
@@ -130,11 +117,9 @@ function PendingApp() {
                 </div>
             </div>
 
-            {/* Contact Information Section */}
             <div className="ml-5 mt-10">
                 <div className="text-lg font-semibold">Contact Information</div>
                 <div className="grid grid-cols-2 gap-4 mt-4">
-                    {/* Dynamic Rows for Contact Information */}
                     {Object.entries({
                         "Address in the Country of Domicile": applicant.addressDomicile,
                         "Address During Stay in Sri Lanka": applicant.addressDuringStay,
@@ -150,11 +135,9 @@ function PendingApp() {
                 </div>
             </div>
 
-            {/* Professional Information Section */}
             <div className="ml-5 mt-10">
                 <div className="text-lg font-semibold">Professional Information</div>
                 <div className="grid grid-cols-3 gap-4 mt-4">
-                    {/* Dynamic Rows for Professional Information */}
                     {Object.entries({
                         "Profession": applicant.profession,
                         "Name and Address of Workplace": `${applicant.workplace.name}, ${applicant.workplace.address}`,
@@ -168,7 +151,6 @@ function PendingApp() {
                 </div>
             </div>
 
-            {/* Navigation Buttons Section */}
             <div className="flex justify-between items-center mt-10 px-5 mb-10">
                 <button className="border border-gray-300 text-gray-700 rounded-lg px-6 py-2 hover:bg-gray-100">
                     Back
