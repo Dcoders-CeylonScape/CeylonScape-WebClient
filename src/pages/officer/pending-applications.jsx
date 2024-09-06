@@ -1,6 +1,8 @@
 import Button from "@mui/material/Button";
 import BiSortUpIcon from "../../assets/images/bi_sort_up.png";
 import {
+    FormControl,
+    Input,
     Paper,
     Table,
     TableBody,
@@ -13,9 +15,11 @@ import {
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import dayjs from 'dayjs'
 import {DemoContainer} from "@mui/x-date-pickers/internals/demo/index.js";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
+import {useSelector} from "react-redux";
 
 import ApplicationTable from "../../components/applicationTable.jsx";
 
@@ -44,6 +48,34 @@ const visaTypes = [
 
 function PendingApplications() {
 
+    let [applications, setApplications] = React.useState(useSelector(state => state.application.data.pendingApplications));
+
+    const searchByName = (e) => {
+        if(e.target.value === ''){
+            window.location.reload();
+        }else{
+            setApplications(applications.filter(application => application.fullName.toLowerCase().includes(e.target.value.toLowerCase())));
+        }
+    }
+
+    const searchByPassportNumber = (e) => {
+        if(e.target.value === ''){
+            window.location.reload();
+        }else {
+            setApplications(applications.filter(application => application.passport.number.toLowerCase().includes(e.target.value.toLowerCase())));
+        }
+    }
+
+    const searchByDate = (e) => {
+        const date = new Date(e.$d)
+        let formattedDate = date.toISOString().slice(0, 10);
+        if(e.$d === ''){
+            window.location.reload();
+        }else {
+            setApplications(applications.filter(application => application.createdAt.slice(0, 10) === formattedDate));
+        }
+    }
+
     return (
         <div className={"ml-[350px] mr-12"}>
             <div className={"flex justify-between pt-10 items-center"}>
@@ -60,11 +92,15 @@ function PendingApplications() {
             <div className={"flex justify-between mt-10"}>
                 <div className={"flex flex-col gap-y-2"}>
                     <div className={"font-semibold"}>Search by Name</div>
-                    <TextField
-                        id="outlined-size-small"
-                        placeholder={"John Doe"}
-                        size="small"
-                    />
+                    <FormControl>
+                        <TextField
+                            id="outlined-size-small"
+                            placeholder={"John Doe"}
+                            size="small"
+                            name={'name'}
+                            onChange={searchByName}
+                        />
+                    </FormControl>
                 </div>
                 <div className={"flex flex-col gap-y-2"}>
                     <div className={"font-semibold"}>Search by Passport No</div>
@@ -72,6 +108,8 @@ function PendingApplications() {
                         id="outlined-size-small"
                         placeholder={"A12345678"}
                         size="small"
+                        name={'passport_no'}
+                        onChange={searchByPassportNumber}
                     />
                 </div>
                 <div className={"flex flex-col gap-y-2"}>
@@ -95,7 +133,12 @@ function PendingApplications() {
                     <div className={"font-semibold"}>Search by Date</div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker']}>
-                            <DatePicker size={"small"} className={"!p-0 w-[14em]"}/>
+                            <DatePicker
+                                size={"small"}
+                                className={"!p-0 w-[14em]"}
+                                name={'date'}
+                                onChange={searchByDate}
+                            />
                         </DemoContainer>
                     </LocalizationProvider>
                 </div>
@@ -103,7 +146,7 @@ function PendingApplications() {
             </div>
 
             <div>
-                <ApplicationTable/>
+                <ApplicationTable applications={applications}/>
             </div>
 
         </div>

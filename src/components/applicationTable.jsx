@@ -86,23 +86,18 @@ function createData(passport_no, name, country, date, visa_type, risk_level) {
     return { passport_no, name, country, date, visa_type, risk_level };
 }
 
-const rows = [
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'Medium'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'Low'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'Low'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-    createData('A12345678', 'John Doe', 'USA', '12/10/2021', 'Tourist', 'High'),
-]
+ApplicationTable.prototype = {
+    applications: PropTypes.array.isRequired
+}
 
-function ApplicationTable(){
+function ApplicationTable(props){
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(8);
+    const applications = props.applications;
+
+    const rows = applications.map((application) => {
+        return createData(application.passport.number, application.fullName, application.birthCountry, application.createdAt.slice(0, 10), "Tourist", application.risk_level);
+    })
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
