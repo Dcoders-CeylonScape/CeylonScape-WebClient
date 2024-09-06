@@ -25,7 +25,7 @@ import { useEffect } from "react";
 
 import { redNoticeCheck, yellowNoticeCheck } from "../api/interpol";
 
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -128,14 +128,45 @@ function ApplicationTable() {
 
   useEffect(() => {
     axios
-      .get("/application/list")
+      .get("/application/a")
       .then((response) => {
         try {
           const data =
             typeof response.data === "string"
               ? JSON.parse(response.data)
               : response.data;
-          setApplications(data);
+          setApplications(data.map((application) => {
+            return {
+                id: application.id,
+                        fullName: application.fullName,
+                        // split full name into forename and name
+                        forename: application.fullName.split(' ')[0],
+                        name: application.fullName.split(' ')[1],
+                        nationality: application.nationalilty,
+                        gender: application.gender,
+                        dob: application.dob,
+                        pob: application.birthPlace,
+                        cob: application.birthCountry,
+                        civilStatus: application.civilStatus,
+                        height: application.height + ' cm',
+                        addressDomicile: application.domicleAddress,
+                        addressDuringStay: application.addressDuringSriLanka,
+                        telephone: application.telephone,
+                        mobile: application.mobile,
+                        email: application.email,
+                        profession: application.profession.nameOfWorkplace, // change
+                        workplace: {
+                            name: application.profession.nameOfWorkplace,
+                            address: application.profession.addressOfWorkplace,
+                            email: application.profession.emailOfWorkplace,
+                        },
+                        imageURL: application.image,
+                        passportNo: application.passport.number,
+                        date: application.createdAt,
+                        visaType: application.residenceVisaInfo.applyingFor,
+            }
+          }
+            ));
 
           const riskTypePromises = data.map((application) => {
             return noticeCheck(
