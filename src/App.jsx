@@ -22,7 +22,7 @@ import Sabaragamuwa from "./pages/user/DestinationsProvince/Provinces/sabaragamu
 import Central from "./pages/user/DestinationsProvince/Provinces/central.jsx";
 import OfficerLayout from "./layouts/officer_layout.jsx";
 import Dashboard from "./pages/officer/dashboard.jsx";
-
+import VisaProcessStep from "./pages/user/VisaApplicationProcess/visa-process.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,9 +32,9 @@ const router = createBrowserRouter(
         <Route path={"sign-in"} element={<SignIn />} />
         <Route path={"auth-main"} element={<AuthMain />} />
       </Route>
-        <Route path={"officer"} element={<OfficerLayout/>} >
-            <Route index element={<Dashboard/>} />
-        </Route>
+      <Route path={"officer"} element={<OfficerLayout />}>
+        <Route index element={<Dashboard />} />
+      </Route>
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
         <Route path={"provinces"} element={<DestinationsProvince />}>
@@ -48,6 +48,7 @@ const router = createBrowserRouter(
           <Route path={"central"} element={<Central />} />
           <Route path={"eastern"} element={<Eastern />} />
         </Route>
+        <Route path={"visa-application"} element={<VisaProcessStep />} />
       </Route>
     </Route>
   )

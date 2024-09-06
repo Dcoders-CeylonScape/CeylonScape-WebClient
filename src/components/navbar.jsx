@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
 import Logo2 from "../assets/images/logo2.png";
 import User from "../assets/images/user.jpg";
@@ -22,7 +22,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -36,6 +36,18 @@ function NavBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleSignupClick = () => {
+    navigate("auth/sign-up");
+  };
+
+  const handleSigninClick = () => {
+    navigate("auth/sign-in");
+  };
+
+  const handleApplyVisaClick = () => {
+    navigate("visa-application");
   };
 
   return (
@@ -142,17 +154,28 @@ function NavBar() {
             <Button
               sx={{ textTransform: "none" }}
               variant="contained"
-              href="auth/sign-up"
+              onClick={handleApplyVisaClick}
+              className={
+                "!mr-4 !bg-white !rounded-full !text-black !font-poppins !font-medium"
+              }
+            >
+              Apply Visa
+            </Button>
+            <Button
+              sx={{ textTransform: "none" }}
+              variant="contained"
+              onClick={handleSignupClick}
               className={
                 "!mr-4 !bg-white !rounded-full !text-black !font-poppins !font-medium"
               }
             >
               Signup
             </Button>
+
             <Button
               sx={{ textTransform: "none" }}
               variant="contained"
-              href="auth/sign-in"
+              onClick={handleSigninClick}
               className={
                 "!mr-4 !bg-white !rounded-full !text-black !font-poppins !font-medium"
               }
