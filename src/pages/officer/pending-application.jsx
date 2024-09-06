@@ -5,11 +5,17 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FlagIcon from '@mui/icons-material/Flag';
 import CircularProgress from '@mui/material/CircularProgress'; 
 
+import RedFlagIcon from "../../assets/images/flag_red.png";
+import YellowFlagIcon from "../../assets/images/flag_yellow.png";
+import GreenFlagIcon from "../../assets/images/flag_green.png"; 
+
+import { redNoticeCheck, yellowNoticeCheck } from '../../api/interpol';
 
 function PendingApp() {
     let { id } = useParams();
     const [applicant, setApplicant] = useState(null);
     const [loading, setLoading] = useState(true); 
+    const [NoticeState, setNoticeState] = useState('green');
 
 
     useEffect(() => {
@@ -29,6 +35,38 @@ function PendingApp() {
                 setLoading(false);
             });
     }, [id]);
+
+    useEffect(() => {
+        if (applicant && applicant.forename && applicant.name) {
+            redNoticeCheck(applicant.forename, applicant.name)
+                .then(hasRedNotice => {
+                    if (hasRedNotice) {
+                        console.log("Red notice found.");
+                        setNoticeState('red');
+                    } else {
+                        yellowNoticeCheck(applicant.forename, applicant.name)
+                            .then(hasYellowNotice => {
+                                if (hasYellowNotice) {
+                                    console.log("Yellow notice found.");
+                                    setNoticeState('yellow');
+                                } else {
+                                    console.log("No notices found.");
+                                    setNoticeState('green');
+                                }
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking notices:", error);
+                    // Handle errors or set default state as needed
+                });
+        }
+    }, [applicant]); // Ensure this is the correct dependency
+
+
+
+
+
 
     if (loading) {
         return (
@@ -77,7 +115,10 @@ function PendingApp() {
                             <div className="flex-col">
                                 <div className="flex items-center">
                                     <div className="text-2xl font-medium">{applicant.fullName}</div>
-                                    <FlagIcon className="text-Warning_war50 ml-2" /> {/* Flag icon next to the name */}
+                                    {/* <FlagIcon className="text-Warning_war50 ml-2" /> Flag icon next to the name */}
+                                    {NoticeState === 'red' && <img src={RedFlagIcon} alt="Red Flag" className="h-6 ml-2" />}
+                                    {NoticeState === 'yellow' && <img src={YellowFlagIcon} alt="Yellow Flag" className="h-6 ml-2" />}
+                                    {NoticeState === 'green' && <img src={GreenFlagIcon} alt="Green Flag" className="h-6 ml-2" />}
                                 </div>
                                 <div className="text-lg font-base text-primary_pri50">{applicant.nationality}</div>
                             </div>
