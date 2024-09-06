@@ -10,6 +10,8 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Logo2 from '../assets/images/logo.png';
 import User from '../assets/images/prof.jpg';
 
+import { Link } from 'react-router-dom';
+
 function Sidebar() {
   const location = useLocation();
 
@@ -26,15 +28,23 @@ function Sidebar() {
         <ul className="list-none m-0 p-0">
           <li className={`flex items-center p-4 mt-2 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer') && location.pathname === '/officer' ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <DashboardIcon className="text-primary_pri50 text-lg" />
-            <span className="ml-4 text-primary_pri50 font-semibold text-base">Dashboard</span>
+            {/* <span className="ml-4 text-primary_pri50 font-semibold text-base">Dashboard</span> */}
+            <Link to="/officer" className="ml-4 text-primary_pri50 font-semibold text-base">Dashboard</Link>
           </li>
           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/pending') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <AssignmentIcon className="text-gray-700 text-lg" />
-            <span className="ml-4 text-gray-700 font-semibold text-base">Pending Applications</span>
+            {/* <span className="ml-4 text-gray-700 font-semibold text-base">Pending Applications</span> */}
+            <Link to="/officer/pending-applications" className="ml-4 text-gray-700 font-semibold text-base">Pending Applications</Link>
+          </li>
+           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/pending') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
+            <AssignmentIcon className="text-gray-700 text-lg" />
+            {/* <span className="ml-4 text-gray-700 font-semibold text-base">All Applications</span> */}
+            <Link to="/officer/all-applications" className="ml-4 text-gray-700 font-semibold text-base">All Applications</Link>
           </li>
           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/risks') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <WarningAmberIcon className="text-gray-700 text-lg" />
-            <span className="ml-4 text-gray-700 font-semibold text-base">Risk Alerts</span>
+            {/* <span className="ml-4 text-gray-700 font-semibold text-base">Risk Alerts</span> */}
+            <Link to="/officer/risk-alerts" className="ml-4 text-gray-700 font-semibold text-base">Risk Alerts</Link>
           </li>
         </ul>
       </div>

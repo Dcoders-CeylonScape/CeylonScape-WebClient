@@ -16,7 +16,7 @@ const theme = createTheme({
         },
     },
     typography: {
-    }
+    },
 });
 
 export default theme;
