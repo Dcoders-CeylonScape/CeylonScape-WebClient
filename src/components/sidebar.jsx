@@ -32,6 +32,10 @@ function Sidebar() {
             <AssignmentIcon className="text-gray-700 text-lg" />
             <span className="ml-4 text-gray-700 font-semibold text-base">Pending Applications</span>
           </li>
+           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/pending') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
+            <AssignmentIcon className="text-gray-700 text-lg" />
+            <span className="ml-4 text-gray-700 font-semibold text-base">All Applications</span>
+          </li>
           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/risks') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <WarningAmberIcon className="text-gray-700 text-lg" />
             <span className="ml-4 text-gray-700 font-semibold text-base">Risk Alerts</span>
