@@ -16,6 +16,18 @@ function Sidebar() {
   // Function to check if the path is active based on the beginning of the pathname
   const isActive = (path) => location.pathname.startsWith(path);
 
+  const redirectDashoard = () => {
+    window.location.href = '/officer';
+  }
+
+    const redirectPendingApplications = () => {
+        window.location.href = '/officer/pending-applications';
+    }
+
+    const redirectAllApplications = () => {
+        window.location.href = '/officer/all-applications';
+    }
+
   return (
     <div className="flex flex-col justify-between min-h-[95vh] w-[300px] bg-white border-r border-blue-300 fixed p-5">
       <div className="flex items-center ml-8">
@@ -26,19 +38,19 @@ function Sidebar() {
         <ul className="list-none m-0 p-0">
           <li className={`flex items-center p-4 mt-2 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer') && location.pathname === '/officer' ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <DashboardIcon className="text-primary_pri50 text-lg" />
-            <span className="ml-4 text-primary_pri50 font-semibold text-base">Dashboard</span>
+            <span className="ml-4 text-primary_pri50 font-semibold text-base" onClick={redirectDashoard}>Dashboard</span>
           </li>
           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/pending') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <AssignmentIcon className="text-gray-700 text-lg" />
-            <span className="ml-4 text-gray-700 font-semibold text-base">Pending Applications</span>
+            <span className="ml-4 text-gray-700 font-semibold text-base" onClick={redirectPendingApplications}>Pending Applications</span>
           </li>
            <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/pending') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <AssignmentIcon className="text-gray-700 text-lg" />
-            <span className="ml-4 text-gray-700 font-semibold text-base">All Applications</span>
+            <span className="ml-4 text-gray-700 font-semibold text-base" onClick={redirectAllApplications}>All Applications</span>
           </li>
           <li className={`flex items-center p-4 mb-3 cursor-pointer rounded-lg transition duration-300 ${isActive('/officer/risks') ? 'bg-primary_pri10' : 'hover:bg-primary_pri10'}`}>
             <WarningAmberIcon className="text-gray-700 text-lg" />
-            <span className="ml-4 text-gray-700 font-semibold text-base">Risk Alerts</span>
+            <span className="ml-4 text-gray-700 font-semibold text-base" >Risk Alerts</span>
           </li>
         </ul>
       </div>

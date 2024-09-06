@@ -17,7 +17,7 @@ function OfficerLogin() {
             <div className="text-center font-normal font-inter text-[12px] md:text-[14px] leading-normal">
                 Welcome back! Please enter your details
             </div>
-            <form className="flex mt-5 min-w-64 flex-col gap-4">
+            <form className="w-full flex mt-5 min-w-64 flex-col gap-4">
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="email1" value="Email" />
@@ -52,19 +52,21 @@ function OfficerLogin() {
                         </div>
                     </a>
                 </div>
-                <div className="flex justify-center">
-                    <Button
-                        type="submit"
-                        href="sign-in"
-                        variant="contained"
-                        sx={{ textTransform: "none", fontSize: "20px", marginTop: "1rem" }}
-                        className="w-[120px]  sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-white !text-center !text-[14px] !leading-[25.069px] !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
-                    >
-                        Log in
-                    </Button>
-                </div>
-            </form>
 
+            </form>
+            <div className="flex justify-center" onClick={() => {
+                window.location.href = "/officer";
+            }}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ textTransform: "none", fontSize: "20px", marginTop: "1rem" }}
+                    className="w-[120px]  sm:w-[200px] md:w-[300px] lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-white !text-center !text-[14px] !leading-[25.069px] !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
+
+                >
+                    Log in
+                </Button>
+            </div>
         </div>
     </div>
   );
