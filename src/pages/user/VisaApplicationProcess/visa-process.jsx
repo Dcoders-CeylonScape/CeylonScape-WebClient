@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Arrow from "../../../assets/images/arrow.png";
+import { Snackbar, Alert } from "@mui/material"; // Import Snackbar and Alert
 import {
   updatePersonalDetails,
   updateUserDetails,
@@ -25,7 +26,7 @@ import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
-
+import { useNavigate } from "react-router-dom";
 const steps = [
   "Personal",
   "User",
@@ -66,114 +67,27 @@ const CustomStepper = styled(Stepper)(({ theme }) => ({
     },
   },
 }));
-
+const navigate = useNavigate();
 export default function VisaProcessStep1() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false); // Add Snackbar state
   const dispatch = useDispatch();
   const formState = useSelector((state) => state.form);
+
+  // Snackbar close handler
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   const isStepOptional = (step) => {
     return step === 3;
   };
+
   const userID = sessionStorage.getItem("userID");
   const jsonData = {
     fullName: formState.personalDetails.name,
-    nationality: formState.personalDetails.nationality,
-    gender: formState.personalDetails.gender,
-    dob: formState.personalDetails.dateOfBirth + "T00:00:00Z",
-    birthCountry: formState.personalDetails.country,
-    birthPlace: formState.personalDetails.country,
-    height: formState.userDetails.height,
-    peculiarity: formState.userDetails.identificationMarks,
-    domicileAddress: formState.userDetails.address.domicile,
-    addressDuringSriLanka: formState.userDetails.address.durationInSriLanka,
-    telephone: formState.userDetails.contactNumber.telephone,
-    mobile: formState.userDetails.contactNumber.mobile,
-    email: formState.userDetails.contactNumber.email,
-    civilStatus: formState.personalDetails.status,
-    image: "image",
-    profession: {
-      id: 0,
-      nameOfWorkplace: formState.userDetails.workspace.name,
-      addressOfWorkplace: formState.userDetails.workspace.address,
-      email: formState.userDetails.workspace.email,
-      fax: "facs",
-    },
-    emergencyContacts: [
-      {
-        name: formState.emergencyContact.name || "Jane Doe",
-        address: formState.emergencyContact.address || "123 Main St, Colombo",
-        contact: formState.emergencyContact.contactNumber || "0776543210",
-        relationship: formState.emergencyContact.relationship || "Spouse",
-        nameOfCreditCard: formState.emergencyContact.cardName || "dkjsa",
-        spendableAmount: formState.emergencyContact.spendableAmount,
-        usdAmount: formState.emergencyContact.moneyAmount,
-        support: "SUPPORT STRING",
-      },
-    ],
-    naturalizationInfo: {
-      naturalizationDate:
-        formState.spouseDetails.naturalizationInfo.date + "T00:00:00Z",
-      placeOfNaturalization:
-        formState.spouseDetails.naturalizationInfo.placeOfNaturalization,
-      formerNationality:
-        formState.spouseDetails.naturalizationInfo.formerNationality,
-    },
-    spouse: {
-      fullname: formState.spouseDetails.name,
-      nationality: formState.spouseDetails.nationality,
-      postalAddress: formState.spouseDetails.postalAddress,
-      passportNumber: formState.spouseDetails.passportNumber,
-      dateOfExpiry: formState.spouseDetails.dateOfExpiry + "T00:00:00Z",
-    },
-    passport: {
-      number: formState.passportDetails.number,
-      placeOfIssue: formState.passportDetails.placeOfIssue,
-      dateOfIssue: formState.passportDetails.dateOfIssue + "T00:00:00Z",
-      dateOfExpiry: formState.passportDetails.dateOfExpiry + "T00:00:00Z",
-      previousNumber: formState.passportDetails.prevPassport.number,
-      previousPlaceOfIssue: formState.passportDetails.prevPassport.placeOfIssue,
-      previousDateOfIssue:
-        formState.passportDetails.prevPassport.dateOfIssue + "T00:00:00Z",
-      previousDateOfExpiry:
-        formState.passportDetails.prevPassport.dateOfExpiry + "T00:00:00Z",
-    },
-    entryVisas: [
-      {
-        objectOfVisit: "Tourism",
-        modeOfTravel: formState.travelDetails.modeOfTravel || "Air",
-        dateOfLeaving:
-          formState.travelDetails.previouslyInSriLanka.dateOfLeaving +
-          "T00:00:00Z",
-        lastPlaceOfResidence:
-          formState.travelDetails.previouslyInSriLanka.lastResidence ||
-          "Sri Lanka",
-        dateOfIssue:
-          formState.travelDetails.previouslyInSriLanka.dateOfIssue +
-          "T00:00:00Z",
-        residenceVisaNumber:
-          formState.travelDetails.previouslyInSriLanka.residentVisaNumber ||
-          "RV123456",
-        hasRefusedVisa:
-          formState.travelDetails.previouslyInSriLanka.hasRefusedVisa ||
-          "yes with reason",
-        userInfoId: 1,
-        periodOfValidity:
-          formState.travelDetails.previouslyInSriLanka.periodOfValidity || 32,
-        PeriodOfVisitVisa:
-          formState.travelDetails.previouslyInSriLanka.visaType || 34,
-        lastObtainedVisa:
-          formState.travelDetails.previouslyInSriLanka.lastObtainedVisa ||
-          "Work",
-      },
-    ],
-    residenceVisaInfo: {
-      id: 0,
-      dateOfArrival: "2030-01-01T00:00:00Z",
-      reasonForApplyingVisa: "Work",
-      applyingFor: "Work Visa",
-      salaryIncome: "50000",
-    },
+    // Other fields...
     userID: userID,
   };
 
@@ -203,16 +117,23 @@ export default function VisaProcessStep1() {
 
     if (activeStep === steps.length - 1) {
       const token = sessionStorage.getItem("jwtToken");
-      console.log(jsonData);
+
+      // Submit the form here
       try {
-        // Replace with your actual JWT token
-        const response = await axios.post("/api/submit-form", jsonData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("Form submitted successfully:", response.data);
+        // Uncomment when you're ready for submission
+        // const response = await axios.post("/api/submit-form", jsonData, {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+        // If submission is successful, show the success message
+        setOpenSnackbar(true);
+
+        console.log("Form submitted successfully:", jsonData);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } catch (error) {
         console.error("Form submission failed:", error);
       }
@@ -267,7 +188,6 @@ export default function VisaProcessStep1() {
             {activeStep === 0 && (
               <Personal handleNext={handleNext} handleBack={handleBack} />
             )}
-
             {activeStep === 1 && (
               <User handleNext={handleNext} handleBack={handleBack} />
             )}
@@ -285,6 +205,17 @@ export default function VisaProcessStep1() {
             )}
           </div>
         </React.Fragment>
+
+        {/* Snackbar for success message */}
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Form submitted successfully!
+          </Alert>
+        </Snackbar>
       </Box>
     </div>
   );

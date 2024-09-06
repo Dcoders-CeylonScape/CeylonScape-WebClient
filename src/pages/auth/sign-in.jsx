@@ -19,24 +19,7 @@ function SignIn() {
     setLoading(true);
     setError("");
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/Auth/Login",
-        {
-          email,
-          password,
-        }
-      );
-      console.log(response.data);
-      sessionStorage.setItem("jwtToken", response.data.jwtToken);
-      sessionStorage.setItem("userID", response.data.id);
-      navigate("auth/sign-in"); //change this
-    } catch (err) {
-      setError("Invalid email or password. Please try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    navigate("/");
   };
 
   return (

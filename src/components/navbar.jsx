@@ -161,7 +161,7 @@ function NavBar() {
             >
               Apply Visa
             </Button>
-            <Button
+            {/* <Button
               sx={{ textTransform: "none" }}
               variant="contained"
               onClick={handleSignupClick}
@@ -170,9 +170,9 @@ function NavBar() {
               }
             >
               Signup
-            </Button>
+            </Button> */}
 
-            <Button
+            {/* <Button
               sx={{ textTransform: "none" }}
               variant="contained"
               onClick={handleSigninClick}
@@ -181,7 +181,7 @@ function NavBar() {
               }
             >
               Sign In
-            </Button>
+            </Button> */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <img
