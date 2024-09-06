@@ -1,8 +1,7 @@
 import React from "react";
 import WidgetRisk from "../../components/widgets/widgetRisk";
 import Button from "@mui/material/Button";
-import {BarChart, LineChart} from "@mui/x-charts"; 
-import WidgetRisk from "../../components/widgets/widgetRisk"; 
+import {BarChart, LineChart} from "@mui/x-charts";
 
 function Dashboard() {
     return (
