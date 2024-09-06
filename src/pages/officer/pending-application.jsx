@@ -10,6 +10,8 @@ import YellowFlagIcon from "../../assets/images/flag_yellow.png";
 import GreenFlagIcon from "../../assets/images/flag_green.png"; 
 
 import { redNoticeCheck, yellowNoticeCheck } from '../../api/interpol';
+import { interpolApi } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function PendingApp() {
     let { id } = useParams();
@@ -18,6 +20,36 @@ function PendingApp() {
     const [loading, setLoading] = useState(true); 
     const [NoticeState, setNoticeState] = useState('green');
 
+
+    const navigate = useNavigate();
+
+    const approve = () => {
+        interpolApi.get(`/application/${id}/approve`)
+            .then(response => {
+                console.log(response);
+                navigate('/officer/pending-applications');
+                
+            })
+            .catch(error => {
+                console.error('There was an error approving the application:', error);
+                navigate('/officer/pending-applications');
+
+            });
+    };
+
+    const deny = () => {
+        interpolApi.get(`/application/${id}/deny`)
+            .then(response => {
+                console.log(response);
+                navigate('/officer/pending-applications');
+
+            })
+            .catch(error => {   
+                console.error('There was an error denying the application:', error);
+                navigate('/officer/pending-applications');
+
+            });
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -34,25 +66,25 @@ function PendingApp() {
                       fullName: data.fullName,
                       forename: data.fullName.split(' ')[0],
                       name: data.fullName.split(' ')[1] || '',
-                      nationality: data.nationality, // fixed spelling from "nationalilty"
+                      nationality: data.nationality, 
                       gender: data.gender,
                       dob: data.dob,
                       pob: data.birthPlace,
                       cob: data.birthCountry,
                       civilStatus: data.civilStatus,
                       height: data.height + ' cm',
-                      addressDomicile: data.domicleAddress, // fix spelling if needed
+                      addressDomicile: data.domicileAddress, 
                       addressDuringStay: data.addressDuringSriLanka,
                       telephone: data.telephone,
                       mobile: data.mobile,
                       email: data.email,
-                      profession: data.profession.nameOfWorkplace, // renamed as requested
+                      profession: data.profession.nameOfWorkplace, 
                       workplace: {
                         name: data.profession.nameOfWorkplace,
                         address: data.profession.addressOfWorkplace,
-                        email: data.profession.emailOfWorkplace,
+                        email: data.profession.email,
                       },
-                      imageURL: "data:image/png;base64," + data.image,
+                      imageURL:  data.image,
                     });
 
 
@@ -168,11 +200,11 @@ function PendingApp() {
                                     Flag
                                 </button> */}
 
-                                <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100">
+                                <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100" onClick={deny}>
                                     Deny
                                 </button>
 
-                                <button className="bg-primary_pri50 text-white rounded-lg px-4 h-[42px] hover:text-primary_pri10">
+                                <button className="bg-primary_pri50 text-white rounded-lg px-4 h-[42px] hover:text-primary_pri10" onClick={approve}>
                                     Approve
                                 </button>
                             </div>
@@ -255,9 +287,11 @@ function PendingApp() {
             </div>
 
             <div className="flex justify-between items-center mt-10 px-5 mb-10">
+                <Link to="/officer/pending-applications" style={{ textDecoration: 'none' }}>
                 <button className="border border-gray-300 text-gray-700 rounded-lg px-6 py-2 hover:bg-gray-100">
                     Back
                 </button>
+                </Link>
                 <div className="flex justify-center items-center w-10 h-10 bg-primary_pri10 rounded-full cursor-pointer">
                     <ArrowDropDownIcon className="text-primary_pri50" />
                 </div>
