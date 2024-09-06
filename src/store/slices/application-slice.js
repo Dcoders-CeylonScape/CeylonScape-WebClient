@@ -8,7 +8,7 @@ const applicationSlice = createSlice({
             pendingApplications: [
                 {
                     "id": 1,
-                    "fullName": "John Doe",
+                    "fullName": "Zu khas",
                     "nationality": "Sri Lankan",
                     "gender": "Male",
                     "dob": "1990-01-01T00:00:00Z",

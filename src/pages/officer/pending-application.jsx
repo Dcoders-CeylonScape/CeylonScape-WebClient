@@ -53,40 +53,42 @@ function PendingApp() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`/application/${id}`)
+        axios.get(`/application/1`)
             .then(response => {
                 try {
                     var res = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
 
                     // filter and get the given id
                     var data = res
+                    setApplicant(data);
                 
-                    setApplicant({
-                      id: data.id,
-                      fullName: data.fullName,
-                      forename: data.fullName.split(' ')[0],
-                      name: data.fullName.split(' ')[1] || '',
-                      nationality: data.nationality, 
-                      gender: data.gender,
-                      dob: data.dob,
-                      pob: data.birthPlace,
-                      cob: data.birthCountry,
-                      civilStatus: data.civilStatus,
-                      height: data.height + ' cm',
-                      addressDomicile: data.domicileAddress, 
-                      addressDuringStay: data.addressDuringSriLanka,
-                      telephone: data.telephone,
-                      mobile: data.mobile,
-                      email: data.email,
-                      profession: data.profession.nameOfWorkplace, 
-                      workplace: {
-                        name: data.profession.nameOfWorkplace,
-                        address: data.profession.addressOfWorkplace,
-                        email: data.profession.email,
-                      },
-                      imageURL:  data.image,
-                    });
+                    // setApplicant({
+                    //   id: data.id,
+                    //   fullName: data.fullName,
+                    //   forename: data.fullName.split(' ')[0],
+                    //   name: data.fullName.split(' ')[1] || '',
+                    //   nationality: data.nationality, 
+                    //   gender: data.gender,
+                    //   dob: data.dob,
+                    //   pob: data.birthPlace,
+                    //   cob: data.birthCountry,
+                    //   civilStatus: data.civilStatus,
+                    //   height: data.height + ' cm',
+                    //   addressDomicile: data.domicileAddress, 
+                    //   addressDuringStay: data.addressDuringSriLanka,
+                    //   telephone: data.telephone,
+                    //   mobile: data.mobile,
+                    //   email: data.email,
+                    //   profession: data.profession.nameOfWorkplace, 
+                    //   workplace: {
+                    //     name: data.profession.nameOfWorkplace,
+                    //     address: data.profession.addressOfWorkplace,
+                    //     email: data.profession.email,
+                    //   },
+                    //   imageURL:  data.image,
+                    // });
 
+                    console.log("applicant",applicant);
 
                 } catch (error) {
                     console.error('Failed to parse data as JSON:', error);
