@@ -105,9 +105,9 @@ function NoticeDetails({ noticeId, applicant }) {
         if (realIndex < 0 || realIndex >= images.length) return null;
 
         return (
-            <Box key={key} display="flex" justifyContent="center" alignItems="center" height="100%">
-                <img src={images[realIndex]._links.self.href} alt={`Notice Image ${realIndex}`} style={{ width: '100%', height: 'auto' }} />
-            </Box>
+            <div className={"overflow-hidden"}>
+                <img src={images[realIndex]._links.self.href} alt={`Notice Image ${realIndex}`} className={"w-full h-[25em] object-cover overflow-hidden"} />
+            </div>
         );
     };
 
@@ -123,58 +123,74 @@ function NoticeDetails({ noticeId, applicant }) {
 
     return (
 
-        <Box display="flex" flexDirection="column" gap={2} p={2}>
-        <Box display="flex" p={2} gap={2}>
-
-        <Box flex={1} height={500} position="relative" gap={2}> 
-               <img src={applicant.imageURL} alt="Person" className=" w-auto object-cover rounded-[20px] mb-3 border-2 border-primary_pri50" />
-            </Box>
-
-            <Box flex={1} height={500} position="relative" gap={2}> 
-                <IconButton
-                    onClick={handleBack}
-                    disabled={activeStep === 0}
-                    sx={{ position: 'absolute', left: 0, bottom: 0, transform: 'translateY(-50%)', zIndex: 1 }}
-                >
-                    <ArrowBackIosIcon />
-                </IconButton>
-                <div className="h-1/2">
-                <VirtualizeSwipeableViews
-                    index={activeStep}
-                    onChangeIndex={handleChangeIndex}
-                    slideRenderer={slideRenderer}
-                    enableMouseEvents
-                />
+        <div>
+            <div className={"flex gap-10 items-center"}>
+                <div className={"w-[50%] flex flex-col justify-center items-center"}>
+                    <div className={"text-xl font-semibold mb-5"}>Visa Applicant</div>
+                    <img src={applicant.imageURL} alt="Person" className="w-[20em] h-[25em] object-cover rounded-[20px]  border-2 border-primary_pri50" />
                 </div>
-                
-                <IconButton
-                    onClick={handleNext}
-                    disabled={activeStep === images.length - 1}
-                    sx={{ position: 'absolute', right: 0, bottom: 0, transform: 'translateY(-50%)', zIndex: 1 }}
-                >
-                    <ArrowForwardIosIcon />
-                </IconButton>
-            </Box>
 
+                <div className={"w-[50%] flex flex-col justify-center items-center"}>
+                    <div className={"text-xl font-semibold mb-5"}>Noticed Person</div>
+                    <div className={"flex items-center"}>
+                        <IconButton
+                            onClick={handleBack}
+                            disabled={activeStep === 0}
+                            className={"!rounded-full !bg-primary_pri10 h-[2em] w-[2em] flex items-center justify-center"}
+                        >
+                            <ArrowBackIosIcon />
+                        </IconButton>
+                        <VirtualizeSwipeableViews
+                            index={activeStep}
+                            onChangeIndex={handleChangeIndex}
+                            slideRenderer={slideRenderer}
+                            enableMouseEvents
+                            className={"rounded-[20px] border-2 border-primary_pri50 mx-2 w-[20em] h-[25em] overflow-hidden"}
+                        />
+                        <IconButton
+                            onClick={handleNext}
+                            disabled={activeStep === images.length - 1}
+                            className={"!rounded-full !bg-primary_pri10 h-[2em] w-[2em] flex items-center justify-center"}
+                        >
+                            <ArrowForwardIosIcon />
+                        </IconButton>
+                    </div>
+                </div>
+            </div>
             <Box flex={2} p={3}>
-                <Typography variant="h6" component="h2">
+                <Typography className={"!text-xl !font-semibold !my-5"}>
                     Notice Details
                 </Typography>
-                <Typography variant="body2" sx={{ mt: 2 }}>
-                    Name: {notice.forename} {notice.name}
-                    <br />
-                    Date of Birth: {notice.date_of_birth}
-                    <br />
-                    Place of Birth: {notice.place_of_birth}
-                    <br />
-                    Charges: {notice.arrest_warrants.map(warrant => warrant.charge).join(', ')}
-                </Typography>
+                <div className={"flex gap-10 px-5"}>
+                    <div className={"flex flex-col w-[50%] gap-y-5"}>
+                        <div className={"space-y-2"}>
+                            <div className={"font-semibold"}>Name:</div>
+                            <div className={"ms-10"}>{notice.forename} {notice.name}</div>
+                        </div>
+                        <div className={"space-y-2"}>
+                            <div className={"font-semibold"}>Charges:</div>
+                            <div className={"ms-10 text-justify"}>{notice.arrest_warrants.map(warrant => warrant.charge).join(', ')}</div>
+                        </div>
+                    </div>
+                    <div className={"flex flex-col w-[50%] gap-y-5"}>
+                        <div className={"space-y-2"}>
+                            <div className={"font-semibold"}>Place of Birth:</div>
+                            <div className={"ms-10"}>{notice.place_of_birth}</div>
+                        </div>
+                        <div className={"space-y-2"}>
+                            <div className={"font-semibold"}>Date of Birth:</div>
+                            <div className={"ms-10"}>{notice.date_of_birth}</div>
+                        </div>
+                    </div>
+                </div>
             </Box>
-        </Box>
-            <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100" onClick={denyApplication}>
-                                   Match & Deny Application
-                                </button>
-        </Box>
+            <div className={"mt-5 flex justify-center"}>
+                <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100" onClick={denyApplication}>
+                    Match & Deny Application
+                </button>
+            </div>
+
+        </div>
     );
 }
 
