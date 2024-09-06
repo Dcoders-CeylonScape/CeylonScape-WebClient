@@ -10,6 +10,8 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Logo2 from '../assets/images/logo.png';
 import User from '../assets/images/prof.jpg';
 
+import { Link } from 'react-router-dom';
+
 function Sidebar() {
   const location = useLocation();
 
