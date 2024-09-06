@@ -22,6 +22,11 @@ import Sabaragamuwa from "./pages/user/DestinationsProvince/Provinces/sabaragamu
 import Central from "./pages/user/DestinationsProvince/Provinces/central.jsx";
 import OfficerLayout from "./layouts/officer_layout.jsx";
 import Dashboard from "./pages/officer/dashboard.jsx";
+import PendingAcc from "./pages/officer/pending-account.jsx";
+import PendingInterpol from "./pages/officer/pending-interpol.jsx";
+import OfficerLogin from "./pages/officer/officer-login.jsx";
+import AllApplications from "./pages/officer/all-applications.jsx";
+import PendingApplications from "./pages/officer/pending-applications.jsx";
 import PendingApp from "./pages/officer/pending-application.jsx";
 import Notices from "./pages/officer/notices.jsx";
 
@@ -35,9 +40,14 @@ const router = createBrowserRouter(
         <Route path={"sign-up"} element={<SignUp />} />
         <Route path={"sign-in"} element={<SignIn />} />
         <Route path={"auth-main"} element={<AuthMain />} />
+          <Route path={"officer-login"} element={<OfficerLogin/>} />
       </Route>
         <Route path={"officer"} element={<OfficerLayout/>} >
             <Route index element={<Dashboard/>} />
+            <Route path={"pending-account"} element={<PendingAcc />} />
+            <Route path={"pending-interpol"} element={<PendingInterpol />} />
+            <Route path={"all-applications"} element={<AllApplications/>} />
+            <Route path={"pending-applications"} element={<PendingApplications/>} />
             <Route path={"pending-application/:id"} element={<PendingApp />} />
             <Route path={"pending-application/:id/notices"} element={<Notices />} />
         </Route>

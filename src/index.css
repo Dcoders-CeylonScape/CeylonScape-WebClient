@@ -33,3 +33,12 @@
     font-weight: 400;
     font-style: italic;
 }
+
+Input {
+    padding: 0.5rem !important;
+}
+
+.MuiStack-root{
+    padding: 0 !important;
+    overflow: unset !important;
+}
