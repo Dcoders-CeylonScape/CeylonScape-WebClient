@@ -27,7 +27,11 @@ import PendingInterpol from "./pages/officer/pending-interpol.jsx";
 import OfficerLogin from "./pages/officer/officer-login.jsx";
 import AllApplications from "./pages/officer/all-applications.jsx";
 import PendingApplications from "./pages/officer/pending-applications.jsx";
+import PendingApp from "./pages/officer/pending-application.jsx";
+import Notices from "./pages/officer/notices.jsx";
 
+
+import Interpol from "./pages/interpoltest/interpol.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +48,8 @@ const router = createBrowserRouter(
             <Route path={"pending-interpol"} element={<PendingInterpol />} />
             <Route path={"all-applications"} element={<AllApplications/>} />
             <Route path={"pending-applications"} element={<PendingApplications/>} />
+            <Route path={"pending-application/:id"} element={<PendingApp />} />
+            <Route path={"pending-application/:id/notices"} element={<Notices />} />
         </Route>
       <Route path={"/"} element={<UserLayout />}>
         <Route index element={<Home />} />
@@ -58,6 +64,8 @@ const router = createBrowserRouter(
           <Route path={"central"} element={<Central />} />
           <Route path={"eastern"} element={<Eastern />} />
         </Route>
+      </Route>
+      <Route path={"/interpol"} element={<Interpol />} >
       </Route>
     </Route>
   )

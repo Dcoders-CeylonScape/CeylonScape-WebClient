@@ -1,0 +1,26 @@
+{
+    "id": "1",
+    "fullName": "Khashewa Zurian",
+    "forename": "Z",
+    "name": "Kha",
+    "nationality": "Canadian",
+    "gender": "Female",
+    "dob": "July 15, 1995",
+    "pob": "Toronto, Ontario",
+    "cob": "Canada",
+    "civilStatus": "Single",
+    "height": "165 cm",
+    "addressDomicile": "123 Maple Avenue, Toronto, Ontario, M5H 2N2, Canada",
+    "addressDuringStay": "456 Galle Rd, Colombo, Sri Lanka",
+    "telephone": "+1-416-555-7890",
+    "mobile": "+1-416-987-6543",
+    "email": "emily.johnson@gmail.com",
+    "profession": "Software Engineer",
+    "workplace": {
+        "name": "Maple Media Inc.",
+        "address": "456 King Street, Suite 200, Toronto, Ontario, M5H 3J7, Canada",
+        "email": "emily.johnson@maplemedia.com"
+    },
+    "imageURL": "https://ws-public.interpol.int/notices/v1/red/2022-23535/images/62412749"
+
+}
