@@ -102,6 +102,98 @@ function createData(passport_no, name, country, date, visa_type, risk_level) {
   return { passport_no, name, country, date, visa_type, risk_level };
 }
 
+
+ApplicationTable.prototype = {
+    applications: PropTypes.array.isRequired
+}
+
+function ApplicationTable(props){
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(8);
+    const applications = props.applications;
+
+    const rows = applications.map((application) => {
+        return createData(application.passport.number, application.fullName, application.birthCountry, application.createdAt.slice(0, 10), "Tourist", application.risk_level);
+    })
+
+    // Avoid a layout jump when reaching the last page with empty rows.
+    const emptyRows =
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
+    return(
+        <div className={"mt-10"}>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                    <TableHead>
+                        <TableRow className={"!bg-primary_pri10"}>
+                            <TableCell className={"!font-semibold !text-lg"}>Passport No</TableCell>
+                            <TableCell className={"!font-semibold !text-lg"}>Name</TableCell>
+                            <TableCell className={"!font-semibold !text-lg"}>Country</TableCell>
+                            <TableCell className={"!font-semibold !text-lg"}>Date</TableCell>
+                            <TableCell className={"!font-semibold !text-lg"}>Visa Type</TableCell>
+                            <TableCell className={"!font-semibold !text-lg"}>Risk Level</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {(rowsPerPage > 0
+                                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : rows
+                        ).map((row) => (
+                            <TableRow key={row.passport_no}>
+                                <TableCell>{row.passport_no}</TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.country}</TableCell>
+                                <TableCell>{row.date}</TableCell>
+                                <TableCell>{row.visa_type}</TableCell>
+                                <TableCell>{(
+                                    row.risk_level === 'High' ? <img src={RedFlagIcon} className={"w-6 h-6"} alt=""/> :
+                                        row.risk_level === 'Medium' ? <img src={YellowFlagIcon} className={"w-6 h-6"} alt=""/> :
+                                            <img src={GreenFlagIcon} className={"w-6 h-6"} alt=""/>
+                                )}</TableCell>
+                            </TableRow>
+                        ))}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                colSpan={3}
+                                count={rows.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                slotProps={{
+                                    select: {
+                                        inputProps: {
+                                            'aria-label': 'rows per page',
+                                        },
+                                        native: true,
+                                    },
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+        </div>
+    )
+
 const rows = [
   createData("A12345678", "John Doe", "USA", "12/10/2021", "Tourist", "High"),
   createData("A12345678", "John Doe", "USA", "12/10/2021", "Tourist", "Medium"),
