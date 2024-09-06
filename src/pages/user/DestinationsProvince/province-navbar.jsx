@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = [
@@ -30,6 +31,8 @@ function ProvinceNavbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(navItems[0].label);
+  const location = useLocation();
+  const path = location.pathname;
 
   const navigate = useNavigate();
 

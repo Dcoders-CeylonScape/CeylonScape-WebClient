@@ -1,11 +1,50 @@
+import React, { useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Logo from "../../assets/images/logo3.png";
 import GoogleButton from "../../assets/images/google_login_.png";
 import { Checkbox, Label, TextInput } from "flowbite-react";
 
 function SignUp() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/User", {
+        firstName,
+        lastName,
+        phone,
+        email,
+        password,
+      });
+      console.log(response.data);
+    } catch (err) {
+      setError("Sign up failed. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex w-full h-screen max-h-screen overflow-y-auto flex-col items-center justify-center pt-80 lg:pt-96 pb-10 ">
+    <div className="flex w-full h-screen max-h-screen overflow-y-auto flex-col items-center justify-center pt-80 lg:pt-96 pb-10">
       <img
         src={Logo}
         className="w-[200px] h-auto sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px]"
@@ -17,7 +56,10 @@ function SignUp() {
       <div className="text-center font-normal font-inter text-[12px] md:text-[14px] leading-normal">
         Sign up with Ceylonscapes for free
       </div>
-      <form className="flex mt-5 min-w-64 flex-col gap-4">
+      <form
+        className="flex mt-5 min-w-64 flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
         <div>
           <div className="mb-2 block">
             <Label htmlFor="firstname" value="First Name*" />
@@ -27,6 +69,8 @@ function SignUp() {
             type="text"
             placeholder="Enter your first name"
             required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div>
@@ -38,6 +82,8 @@ function SignUp() {
             type="text"
             placeholder="Enter your last name"
             required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div>
@@ -47,9 +93,11 @@ function SignUp() {
           <TextInput
             id="phone"
             type="tel"
-            placeholder="Enter your mobile number"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+            placeholder="+94 71 234 5678"
+            pattern="\+94\d{7,10}"
             required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div>
@@ -61,6 +109,8 @@ function SignUp() {
             type="email"
             placeholder="Enter your email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -72,46 +122,48 @@ function SignUp() {
             id="password1"
             type="password"
             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="password1" value="Confirm Password*" />
+            <Label htmlFor="confirmpassword" value="Confirm Password*" />
           </div>
           <TextInput
             placeholder="Confirm password"
             id="confirmpassword"
             type="password"
             required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
+        {error && <div className="text-red-600 text-center mt-2">{error}</div>}
         <div className="flex justify-center">
           <Button
             type="submit"
-            href="sign-in"
             variant="contained"
             sx={{ textTransform: "none", fontSize: "20px", marginTop: "1rem" }}
-            className="w-[300px]  lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-white !text-center !text-[14px] !leading-[25.069px] !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
+            className="w-[300px] lg:w-[400px] !font-inter !font-medium !bg-primary_pri50 !text-white !text-center !text-[14px] !leading-[25.069px] !px-4 !py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 2xl:px-[24px] 2xl:py-[10px]"
           >
-            Sign up
+            {loading ? "Loading..." : "Sign up"}
           </Button>
         </div>
       </form>
-      <div className="!font-inter max-w-72 !font-normal mt-5 !text-black text-center text-[14px]  !leading-[18px]">
-        By clicking the Sign Up button, I agree to the terms ans conditions
+      <div className="!font-inter max-w-72 !font-normal mt-5 !text-black text-center text-[14px] !leading-[18px]">
+        By clicking the Sign Up button, I agree to the terms and conditions
       </div>
       <div className="flex items-center gap-2 mt-3">
         <Label htmlFor="remember" className="text-[14px] font-normal">
-          Already have a account?
+          Already have an account?
         </Label>
-
         <a href="sign-in">
           <div className="text-primary_pri50 font-inter text-[14px] font-normal leading-normal flex items-center gap-2">
             Log in Now
           </div>
         </a>
       </div>
-
       <div className="!font-inter !font-normal mt-3 !text-black text-center text-[14px] !leading-[28px]">
         Or Sign Up Using
       </div>
