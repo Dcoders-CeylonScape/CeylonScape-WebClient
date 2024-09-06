@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress'; 
 
 import InterpolNotices from '../../components/officer/interpol';
+import { Link } from 'react-router-dom';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function Notices() {
     let { id } = useParams();
@@ -15,8 +17,38 @@ function Notices() {
         axios.get(`/application/${id}`)
             .then(response => {
                 try {
-                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-                    setApplicant(data); 
+                    var res = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+
+                    // filter and get the given id
+                    var data = res
+                
+                    setApplicant({
+                      id: data.id,
+                      fullName: data.fullName,
+                      forename: data.fullName.split(' ')[0],
+                      name: data.fullName.split(' ')[1] || '',
+                      nationality: data.nationality, // fixed spelling from "nationalilty"
+                      gender: data.gender,
+                      dob: data.dob,
+                      pob: data.birthPlace,
+                      cob: data.birthCountry,
+                      civilStatus: data.civilStatus,
+                      height: data.height + ' cm',
+                      addressDomicile: data.domicleAddress, // fix spelling if needed
+                      addressDuringStay: data.addressDuringSriLanka,
+                      telephone: data.telephone,
+                      mobile: data.mobile,
+                      email: data.email,
+                      profession: data.profession.nameOfWorkplace, // renamed as requested
+                      workplace: {
+                        name: data.profession.nameOfWorkplace,
+                        address: data.profession.addressOfWorkplace,
+                        email: data.profession.emailOfWorkplace,
+                      },
+                      imageURL: "data:image/png;base64," + data.image,
+                    });
+
+
                 } catch (error) {
                     console.error('Failed to parse data as JSON:', error);
                 }
@@ -58,6 +90,25 @@ function Notices() {
             <div className="ml-5 text-lg font-light">
                 Check the applications, Approve, Deny or Mark for Review
             </div>
+
+
+
+            <div className="flex justify-between items-center mt-10 px-5 mb-10">
+                {/* with id */}
+                <Link to={`/officer/pending-application/${id}`} style={{ textDecoration: 'none' }}>
+
+                <button className="border border-gray-300 text-gray-700 rounded-lg px-6 py-2 hover:bg-gray-100">
+                    Back
+                </button>
+                </Link>
+            
+                {/* <Link to="notices" style={{ textDecoration: 'none' }}>
+                <button className="bg-primary_pri50 text-white rounded-lg px-6 py-2 hover:bg-primary_pri60">
+                    Next
+                </button>
+                </Link> */}
+            </div>
+
 
             <div className="mt-10 ml-5 flex gap-6 w-full border-b-2 pb-5 border-gray-300">
                 <div className="flex gap-6 w-full">

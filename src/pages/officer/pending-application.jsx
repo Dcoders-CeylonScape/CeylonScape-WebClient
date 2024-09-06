@@ -14,6 +14,7 @@ import { redNoticeCheck, yellowNoticeCheck } from '../../api/interpol';
 function PendingApp() {
     let { id } = useParams();
     const [applicant, setApplicant] = useState(null);
+    const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true); 
     const [NoticeState, setNoticeState] = useState('green');
 
@@ -23,8 +24,38 @@ function PendingApp() {
         axios.get(`/application/${id}`)
             .then(response => {
                 try {
-                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-                    setApplicant(data); 
+                    var res = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+
+                    // filter and get the given id
+                    var data = res
+                
+                    setApplicant({
+                      id: data.id,
+                      fullName: data.fullName,
+                      forename: data.fullName.split(' ')[0],
+                      name: data.fullName.split(' ')[1] || '',
+                      nationality: data.nationality, // fixed spelling from "nationalilty"
+                      gender: data.gender,
+                      dob: data.dob,
+                      pob: data.birthPlace,
+                      cob: data.birthCountry,
+                      civilStatus: data.civilStatus,
+                      height: data.height + ' cm',
+                      addressDomicile: data.domicleAddress, // fix spelling if needed
+                      addressDuringStay: data.addressDuringSriLanka,
+                      telephone: data.telephone,
+                      mobile: data.mobile,
+                      email: data.email,
+                      profession: data.profession.nameOfWorkplace, // renamed as requested
+                      workplace: {
+                        name: data.profession.nameOfWorkplace,
+                        address: data.profession.addressOfWorkplace,
+                        email: data.profession.emailOfWorkplace,
+                      },
+                      imageURL: "data:image/png;base64," + data.image,
+                    });
+
+
                 } catch (error) {
                     console.error('Failed to parse data as JSON:', error);
                 }
@@ -123,9 +154,19 @@ function PendingApp() {
                                 <div className="text-lg font-base text-primary_pri50">{applicant.nationality}</div>
                             </div>
                             <div className="flex gap-4">
-                                <button className="border border-Warning_war50 text-Warning_war50 rounded-lg px-8 h-[42px] hover:bg-orange-100">
+
+                                {/* View notices button */}
+                                {NoticeState === 'red' && (                 <Link to="notices" style={{ textDecoration: 'none' }}>
+                                    <button className="border border-Warning_war50 text-Warning_war50 rounded-lg px-8 h-[42px] hover:bg-orange-100">
+                                    View Notices
+                                </button> 
+                                </Link>
+                                )}
+
+
+                                {/* <button className="border border-Warning_war50 text-Warning_war50 rounded-lg px-8 h-[42px] hover:bg-orange-100">
                                     Flag
-                                </button>
+                                </button> */}
 
                                 <button className="border border-error_err70 text-error_err70 rounded-lg px-7 h-[42px] hover:bg-red-100">
                                     Deny
@@ -157,6 +198,27 @@ function PendingApp() {
                     </div>
                 </div>
             </div>
+
+
+            {/* <div className="ml-5 mt-10">
+                <div className="text-lg font-semibold">C</div>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                    {Object.entries({
+                        "Address in the Country of Domicile": applicant.addressDomicile,
+                        "Address During Stay in Sri Lanka": applicant.addressDuringStay,
+                        "Telephone": applicant.telephone,
+                        "Mobile": applicant.mobile,
+                        "Email": applicant.email,
+                    }).map(([key, value]) => (
+                        <div className="flex bg-primary_pri10 p-3 rounded-lg" key={key}>
+                            <span className="font-semibold">{key}: </span>
+                            <span className="ml-2">{value}</span>
+                        </div>
+                    ))}
+                </div>
+            </div> */}
+
+
 
             <div className="ml-5 mt-10">
                 <div className="text-lg font-semibold">Contact Information</div>
